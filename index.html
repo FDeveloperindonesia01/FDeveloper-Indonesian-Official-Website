@@ -1198,6 +1198,60 @@ footer {
           </button>
         </div>
       </div>
+
+<!-- ══ CARD 4 ══════════════════════════════ -->
+<div class="app-card rv" style="position: relative; min-height: 300px;">
+  <!-- Trik CSS untuk Toggle Klik -->
+  <input type="checkbox" id="reveal-card-4" style="display: none;">
+  
+  <!-- TAMPILAN 1: Box Tanda Tanya (Muncul di Awal) -->
+  <label for="reveal-card-4" class="mystery-box" style="
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, #2a2e3d, #1e222b);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 10; border-radius: inherit;
+    transition: all 0.3s ease; box-sizing: border-box; border: 2px dashed #4f46e5;
+  ">
+    <div style="font-size: 3.5rem; animation: bounce 2s infinite; margin-bottom: 10px;">❓</div>
+    <span style="color: #a5b4fc; font-weight: bold; letter-spacing: 1px; font-size: 0.9rem;">KLIK UNTUK MEMBUKA</span>
+  </label>
+
+  <!-- Style Khusus Card 4 (Menyembunyikan Mystery Box saat Diklik) -->
+  <style>
+    #reveal-card-4:checked ~ .mystery-box {
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+
+  <!-- TAMPILAN 2: Isi Card 4 Asli Anda (Muncul setelah diklik) -->
+  <div class="app-card-top"></div>
+  <div class="app-card-body">
+    <div class="app-icon">😜</div>
+    <span class="app-cs-badge"><span class="cs-pulse"></span>RAHASIAAAA</span>
+    <h3>RAHASIAAAAA</h3>
+    <p class="app-desc">RAHASIAAAAAAAA</p>
+    <div class="app-platform">
+      <div class="win-squares"><span></span><span></span><span></span><span></span></div> Windows
+    </div>
+  </div>
+  <div class="app-download">
+    <div class="dl-label-group">
+      <span class="dl-label">Link Download</span>
+      <span class="dl-link" data-link="RAHASIAAAAAAAAAAAAAAAAAAAAAA">RAHASIAAAAAAAAAAAAAAAAAA</span>
+    </div>
+    <button class="dl-copy-btn" onclick="copyLink(this)" title="Salin link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 002 2h2a2 2 0 002-2m0 0h2a2 2 0 012 2v3" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
 <!-- /apps-grid --> 
 </div> 
 </section>
