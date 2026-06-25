@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — FDeveloper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#07070D;
+  --bg2:#0D0D18;
+  --bg3:#121220;
+  --bg4:#181828;
+  --bg5:#1E1E30;
+  --ln:rgba(255,255,255,.055);
+  --ln2:rgba(255,255,255,.09);
+  --ln3:rgba(255,255,255,.14);
+  --t1:#ECEAF8;
+  --t2:#9896B5;
+  --t3:#55546E;
+  --acc:#6C63FF;
+  --acc2:#A89EFF;
+  --rose:#FF5C8A;
+  --rose2:#FF8CB0;
+  --green:#22C55E;
+  --green2:rgba(34,197,94,.12);
+  --sidebar:240px;
+}
+
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);line-height:1.6;overflow:hidden}
+
+/* ═══ LOGIN SCREEN ════════════════════════════════ */
+#loginScreen{
+  position:fixed;inset:0;z-index:1000;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+}
+.login-box{
+  width:380px;
+  background:var(--bg2);
+  border:1px solid var(--ln2);
+  border-radius:24px;
+  padding:40px 36px;
+  text-align:center;
+}
+.login-logo{
+  width:52px;height:52px;border-radius:14px;
+  background:var(--acc);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+  position:relative;overflow:hidden;
+}
+.login-logo::before{
+  content:'';position:absolute;
+  width:2.5px;height:72px;background:var(--rose);
+  right:12px;top:-10px;transform:rotate(22deg);
+  border-radius:2px;opacity:.6;
+}
+.login-logo span{
+  font-family:'Syne',sans-serif;font-size:24px;font-weight:800;
+  color:#fff;position:relative;z-index:2;
+}
+.login-box h2{
+  font-family:'Syne',sans-serif;font-size:20px;font-weight:700;
+  color:var(--t1);margin-bottom:5px;
+}
+.login-box p{font-size:13px;color:var(--t2);margin-bottom:28px}
+.login-field{
+  background:var(--bg3);border:1px solid var(--ln2);
+  border-radius:12px;padding:12px 16px;
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:12px;transition:border-color .2s;
+}
+.login-field:focus-within{border-color:rgba(108,99,255,.4)}
+.login-field input{
+  flex:1;background:transparent;border:none;outline:none;
+  color:var(--t1);font-size:14px;font-family:'Inter',sans-serif;
+}
+.login-field input::placeholder{color:var(--t3)}
+.login-field .fi{font-size:16px;flex-shrink:0;opacity:.5}
+.login-btn{
+  width:100%;padding:13px;border-radius:12px;
+  background:var(--acc);border:none;cursor:pointer;
+  color:#fff;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  transition:opacity .2s;margin-top:4px;
+}
+.login-btn:hover{opacity:.82}
+.login-err{
+  font-size:12px;color:var(--rose);margin-top:10px;
+  min-height:16px;
+}
+
+/* ═══ LAYOUT UTAMA ════════════════════════════════ */
+#app{display:none;height:100%;flex-direction:column}
+#app.show{display:flex}
+
+/* Top bar */
+.topbar{
+  height:56px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  background:var(--bg2);border-bottom:1px solid var(--ln);
+}
+.topbar-left{display:flex;align-items:center;gap:12px}
+
+/* Logo mini */
+.tb-logo{
+  width:32px;height:32px;border-radius:9px;
+  background:var(--acc);display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.tb-logo::before{
+  content:'';position:absolute;width:2px;height:44px;
+  background:var(--rose);right:8px;top:-6px;
+  transform:rotate(22deg);border-radius:1px;opacity:.55;
+}
+.tb-logo span{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:#fff;position:relative;z-index:2}
+
+.topbar-title{
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--t1);
+}
+.topbar-badge{
+  font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--acc2);background:rgba(108,99,255,.12);
+  border:1px solid rgba(108,99,255,.22);
+  border-radius:50px;padding:3px 10px;
+}
+
+.topbar-right{display:flex;align-items:center;gap:10px}
+.online-count{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;color:var(--t2);
+}
+.online-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 0 2px rgba(34,197,94,.2);
+}
+.logout-btn{
+  padding:6px 14px;border-radius:8px;border:1px solid var(--ln2);
+  background:transparent;color:var(--t2);cursor:pointer;
+  font-size:12px;font-family:'Inter',sans-serif;
+  transition:border-color .2s,color .2s;
+}
+.logout-btn:hover{border-color:var(--rose);color:var(--rose)}
+
+/* Main body */
+.main-body{flex:1;display:flex;overflow:hidden}
+
+/* ═══ SIDEBAR ═════════════════════════════════════ */
+.sidebar{
+  width:var(--sidebar);flex-shrink:0;
+  background:var(--bg2);border-right:1px solid var(--ln);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+
+.sidebar-head{
+  padding:14px 16px;border-bottom:1px solid var(--ln);flex-shrink:0;
+}
+.sidebar-head h3{
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
+  color:var(--t2);text-transform:uppercase;letter-spacing:1.5px;
+}
+
+.session-list{flex:1;overflow-y:auto;padding:8px}
+.session-list::-webkit-scrollbar{width:3px}
+.session-list::-webkit-scrollbar-thumb{background:var(--ln2);border-radius:2px}
+
+.session-item{
+  padding:12px 12px;border-radius:12px;
+  cursor:pointer;border:1px solid transparent;
+  transition:background .15s,border-color .15s;
+  margin-bottom:4px;
+}
+.session-item:hover{background:var(--bg3);border-color:var(--ln)}
+.session-item.active{background:var(--bg4);border-color:rgba(108,99,255,.3)}
+
+.sess-top{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.sess-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--bg5);border:1px solid var(--ln2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
+  color:var(--acc2);flex-shrink:0;position:relative;
+}
+.sess-avatar .online-pip{
+  position:absolute;bottom:-1px;right:-1px;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--green);border:2px solid var(--bg2);
+}
+.sess-avatar .offline-pip{
+  position:absolute;bottom:-1px;right:-1px;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--t3);border:2px solid var(--bg2);
+}
+.sess-name{
+  font-size:12px;font-weight:500;color:var(--t1);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;
+}
+.sess-unread{
+  background:var(--acc);color:#fff;
+  font-size:10px;font-weight:700;
+  width:18px;height:18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.sess-preview{
+  font-size:11px;color:var(--t3);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  padding-left:40px;
+}
+
+.sidebar-empty{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;
+  color:var(--t3);text-align:center;padding:20px;
+}
+.sidebar-empty-ico{font-size:28px;margin-bottom:4px}
+.sidebar-empty p{font-size:12px}
+
+/* ═══ CHAT AREA ═══════════════════════════════════ */
+.chat-area{
+  flex:1;display:flex;flex-direction:column;overflow:hidden;
+  background:var(--bg);
+}
+
+/* Chat header */
+.chat-topbar{
+  height:56px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  background:var(--bg2);border-bottom:1px solid var(--ln);
+}
+.chat-user-info{display:flex;align-items:center;gap:10px}
+.cu-avatar{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--bg4);border:1px solid var(--ln2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--acc2);
+}
+.cu-info h4{font-size:13px;font-weight:600;color:var(--t1)}
+.cu-info span{font-size:11px;color:var(--t3)}
+.cu-status{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--green)}
+.cu-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green)}
+.cu-status.off{color:var(--t3)}.cu-status.off::before{background:var(--t3)}
+
+/* Messages */
+.chat-msgs{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+.chat-msgs::-webkit-scrollbar{width:4px}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--ln2);border-radius:2px}
+
+/* No conversation selected */
+.no-chat{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:12px;
+  color:var(--t3);text-align:center;
+}
+.no-chat-ico{
+  width:64px;height:64px;border-radius:18px;
+  background:var(--bg3);border:1px solid var(--ln2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;margin-bottom:4px;
+}
+.no-chat h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--t2)}
+.no-chat p{font-size:13px;color:var(--t3)}
+
+.msg-row{display:flex;flex-direction:column;gap:3px}
+.msg-row.from-user{align-items:flex-start}
+.msg-row.from-admin{align-items:flex-end}
+.msg-bubble{
+  max-width:72%;padding:10px 14px;border-radius:16px;
+  font-size:13px;line-height:1.62;word-break:break-word;
+}
+.from-user .msg-bubble{
+  background:var(--bg4);color:var(--t1);
+  border-radius:4px 16px 16px 16px;
+  border:1px solid var(--ln2);
+}
+.from-admin .msg-bubble{
+  background:var(--acc);color:#fff;
+  border-radius:16px 16px 4px 16px;
+}
+.msg-meta{font-size:10px;color:var(--t3);padding:0 3px}
+
+/* Typing indicator */
+.typing-row{display:none;align-items:flex-start;margin-bottom:4px}
+.typing-row.show{display:flex}
+.typing-bubble{
+  background:var(--bg4);border:1px solid var(--ln2);
+  border-radius:4px 16px 16px 16px;
+  padding:11px 14px;display:flex;gap:4px;align-items:center;
+}
+.typing-bubble span{
+  width:5px;height:5px;border-radius:50%;background:var(--t3);
+  animation:tbd .9s infinite;
+}
+.typing-bubble span:nth-child(2){animation-delay:.2s}
+.typing-bubble span:nth-child(3){animation-delay:.4s}
+@keyframes tbd{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+
+/* Input */
+.chat-input-area{
+  padding:14px 20px;border-top:1px solid var(--ln);
+  background:var(--bg2);flex-shrink:0;
+  display:flex;gap:10px;align-items:flex-end;
+}
+.chat-input-wrap{
+  flex:1;background:var(--bg3);border:1px solid var(--ln2);
+  border-radius:14px;display:flex;align-items:center;
+  padding:0 14px;transition:border-color .2s;
+}
+.chat-input-wrap:focus-within{border-color:rgba(108,99,255,.4)}
+.chat-input{
+  flex:1;background:transparent;border:none;outline:none;
+  color:var(--t1);font-size:13px;font-family:'Inter',sans-serif;
+  padding:11px 0;resize:none;line-height:1.5;
+}
+.chat-input::placeholder{color:var(--t3)}
+.send-btn{
+  width:38px;height:38px;border-radius:11px;
+  background:var(--acc);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .2s;flex-shrink:0;
+}
+.send-btn:hover{opacity:.82}
+.send-btn:disabled{opacity:.3;cursor:default}
+
+/* Disabled state */
+.chat-input-area.disabled{opacity:.5;pointer-events:none}
+
+/* ═══ STATS BAR ═══════════════════════════════════ */
+.stats-bar{
+  padding:12px 20px;
+  background:var(--bg2);border-left:1px solid var(--ln);
+  display:flex;flex-direction:column;gap:16px;
+  width:200px;flex-shrink:0;
+  border-left:1px solid var(--ln);
+  overflow-y:auto;
+}
+.stat-card{
+  background:var(--bg3);border:1px solid var(--ln);
+  border-radius:12px;padding:14px;
+}
+.stat-card .sc-lbl{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
+.stat-card .sc-val{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--acc2);line-height:1}
+.stat-card .sc-sub{font-size:11px;color:var(--t3);margin-top:3px}
+
+/* ═══ RESPONSIVE ═════════════════════════════════ */
+@media(max-width:900px){.stats-bar{display:none}}
+@media(max-width:620px){.sidebar{width:200px}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ LOGIN ════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo"><span>F</span></div>
+    <h2>Admin Panel</h2>
+    <p>FDeveloper Indonesia · Dashboard Chat</p>
+    <div class="login-field">
+      <span class="fi">🔒</span>
+      <input type="password" id="passInput" placeholder="Password admin..." onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Masuk ke Dashboard →</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- ══════════════ APP ══════════════════════════ -->
+<div id="app">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="tb-logo"><span>F</span></div>
+      <span class="topbar-title">FDeveloper</span>
+      <span class="topbar-badge">Admin Panel</span>
+    </div>
+    <div class="topbar-right">
+      <div class="online-count">
+        <div class="online-dot"></div>
+        <span id="onlineCount">0 online</span>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">Keluar</button>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main-body">
+
+    <!-- Sidebar: daftar user -->
+    <div class="sidebar">
+      <div class="sidebar-head">
+        <h3>Percakapan</h3>
+      </div>
+      <div class="session-list" id="sessionList">
+        <div class="sidebar-empty">
+          <div class="sidebar-empty-ico">👥</div>
+          <p>Belum ada pengguna yang menghubungi</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area">
+      <div class="chat-topbar" id="chatTopbar" style="display:none">
+        <div class="chat-user-info">
+          <div class="cu-avatar" id="cuAvatar">U</div>
+          <div class="cu-info">
+            <h4 id="cuName">Pengguna</h4>
+            <div class="cu-status" id="cuStatus">Online</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Placeholder sebelum pilih chat -->
+      <div class="no-chat" id="noChatPlaceholder">
+        <div class="no-chat-ico">💬</div>
+        <h3>Pilih percakapan</h3>
+        <p>Klik salah satu pengguna di sidebar untuk mulai membalas</p>
+      </div>
+
+      <!-- Pesan -->
+      <div class="chat-msgs" id="chatMsgs" style="display:none"></div>
+
+      <!-- Typing -->
+      <div class="typing-row" id="typingRow" style="display:none">
+        <div class="typing-bubble"><span></span><span></span><span></span></div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-input-area disabled" id="chatInputArea">
+        <div class="chat-input-wrap">
+          <textarea class="chat-input" id="replyInput" placeholder="Ketik balasan..." rows="1"
+            onkeydown="handleReplyKey(event)" oninput="autoResize(this)"></textarea>
+        </div>
+        <button class="send-btn" id="sendBtn" onclick="sendReply()" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Sidebar -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="sc-lbl">Total Sesi</div>
+        <div class="sc-val" id="statTotal">0</div>
+        <div class="sc-sub">percakapan</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-lbl">Aktif Sekarang</div>
+        <div class="sc-val" id="statOnline">0</div>
+        <div class="sc-sub">pengguna online</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-lbl">Belum Dibalas</div>
+        <div class="sc-val" id="statUnread" style="color:var(--rose2)">0</div>
+        <div class="sc-sub">pesan masuk</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-lbl">Server</div>
+        <div class="sc-val" id="statConn" style="font-size:13px;color:var(--green)">Terhubung</div>
+        <div class="sc-sub" id="statSub">Socket.IO aktif</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script>
+function doLogin() {
+    // 1. Mengambil teks yang diketik user di kotak input
+    var passwordDitulis = document.getElementById("passInput").value;
+    
+    // 2. ATUR PASSWORD ANDA DI SINI
+    var passwordBenar = "LANGITCERAH"; 
+
+    // 3. Proses pengecekan
+    if (passwordDitulis === passwordBenar) {
+        // Jika benar, hilangkan form login (atau ganti dengan aksi lain)
+        document.getElementById("loginScreen").style.display = "none";
+        alert("Login Sukses! Selamat datang di Dashboard.");
+    } else {
+        // Jika salah, munculkan tulisan error
+        document.getElementById("loginErr").innerText = "Password salah! Silakan coba lagi.";
+    }
+}
+</script>
+
+// ═══ CONFIG ══════════════════════════════════════
+const SERVER_URL = 'http://localhost:3000';
+
+// ═══ STATE ══════════════════════════════════════
+let socket = null;
+let sessions = [];
+let activeSession = null;
+let authenticated = false;
+
+// ═══ LOGIN ══════════════════════════════════════
+function doLogin(){
+  const pass = document.getElementById('passInput').value;
+  if (!pass) return;
+
+  if (!socket || !socket.connected) {
+    initSocket(pass);
+  } else {
+    socket.emit('admin_join', { password: pass });
+  }
+}
+
+function doLogout(){
+  authenticated = false;
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('app').classList.remove('show');
+  document.getElementById('passInput').value = '';
+}
+
+// ═══ SOCKET ══════════════════════════════════════
+function initSocket(pass){
+  try {
+    socket = io(SERVER_URL);
+
+    socket.on('connect', () => {
+      console.log('Connected to server');
+      document.getElementById('statConn').textContent = 'Terhubung';
+      document.getElementById('statConn').style.color = 'var(--green)';
+      document.getElementById('statSub').textContent = 'Socket.IO aktif';
+      if (pass) socket.emit('admin_join', { password: pass });
+    });
+
+    socket.on('auth_ok', () => {
+      authenticated = true;
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('app').classList.add('show');
+      document.getElementById('loginErr').textContent = '';
+    });
+
+    socket.on('auth_error', (msg) => {
+      document.getElementById('loginErr').textContent = msg;
+    });
+
+    socket.on('sessions_update', (list) => {
+      sessions = list;
+      renderSidebar();
+      updateStats();
+
+      // Refresh chat aktif
+      if (activeSession) {
+        const s = sessions.find(s => s.sessionId === activeSession);
+        if (s) renderMessages(s.messages);
+      }
+    });
+
+    socket.on('new_message', ({ sessionId, msg }) => {
+      if (sessionId === activeSession) {
+        appendMessage(msg);
+      }
+    });
+
+    socket.on('disconnect', () => {
+      document.getElementById('statConn').textContent = 'Terputus';
+      document.getElementById('statConn').style.color = 'var(--rose)';
+      document.getElementById('statSub').textContent = 'Mencoba reconnect...';
+    });
+
+  } catch(e) {
+    document.getElementById('loginErr').textContent = 'Tidak bisa terhubung ke server.';
+    document.getElementById('statConn').textContent = 'Gagal';
+    document.getElementById('statConn').style.color = 'var(--rose)';
+  }
+}
+
+// ═══ SIDEBAR ══════════════════════════════════════
+function renderSidebar(){
+  const list = document.getElementById('sessionList');
+
+  if (!sessions.length) {
+    list.innerHTML = `<div class="sidebar-empty"><div class="sidebar-empty-ico">👥</div><p>Belum ada pengguna yang menghubungi</p></div>`;
+    return;
+  }
+
+  const onlineCount = sessions.filter(s => s.online).length;
+  document.getElementById('onlineCount').textContent = onlineCount + ' online';
+
+  list.innerHTML = sessions.map(s => {
+    const initials = s.sessionId.slice(-2).toUpperCase();
+    const preview  = s.lastMsg ? escHtml(s.lastMsg.text.slice(0, 30)) + (s.lastMsg.text.length > 30 ? '…' : '') : 'Belum ada pesan';
+    const isActive = s.sessionId === activeSession;
+    const pip      = s.online ? '<div class="online-pip"></div>' : '<div class="offline-pip"></div>';
+    const unread   = s.unread > 0 ? `<div class="sess-unread">${s.unread}</div>` : '';
+    return `
+      <div class="session-item ${isActive ? 'active' : ''}" onclick="selectSession('${s.sessionId}')">
+        <div class="sess-top">
+          <div class="sess-avatar">${initials}${pip}</div>
+          <span class="sess-name">${s.sessionId}</span>
+          ${unread}
+        </div>
+        <div class="sess-preview">${preview}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ═══ PILIH SESI ═══════════════════════════════════
+function selectSession(sessionId){
+  activeSession = sessionId;
+  const s = sessions.find(s => s.sessionId === sessionId);
+  if (!s) return;
+
+  // Update sidebar active state
+  document.querySelectorAll('.session-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.session-item').forEach(el => {
+    if (el.onclick.toString().includes(sessionId)) el.classList.add('active');
+  });
+  renderSidebar();
+
+  // Update chat topbar
+  const topbar = document.getElementById('chatTopbar');
+  topbar.style.display = 'flex';
+  document.getElementById('cuName').textContent = sessionId;
+  document.getElementById('cuAvatar').textContent = sessionId.slice(-2).toUpperCase();
+
+  const statusEl = document.getElementById('cuStatus');
+  if (s.online) {
+    statusEl.textContent = 'Online';
+    statusEl.className = 'cu-status';
+  } else {
+    statusEl.textContent = 'Offline';
+    statusEl.className = 'cu-status off';
+  }
+
+  // Show messages
+  document.getElementById('noChatPlaceholder').style.display = 'none';
+  document.getElementById('chatMsgs').style.display = 'flex';
+
+  renderMessages(s.messages);
+
+  // Enable input
+  const inputArea = document.getElementById('chatInputArea');
+  inputArea.classList.remove('disabled');
+  document.getElementById('sendBtn').disabled = false;
+  document.getElementById('replyInput').focus();
+}
+
+function renderMessages(msgs){
+  const container = document.getElementById('chatMsgs');
+  container.innerHTML = '';
+
+  if (!msgs.length) {
+    container.innerHTML = `<div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:13px">Belum ada pesan di percakapan ini</div>`;
+    return;
+  }
+
+  msgs.forEach(m => appendMessage(m, false));
+  container.scrollTop = container.scrollHeight;
+}
+
+function appendMessage(msg, scroll = true){
+  const container = document.getElementById('chatMsgs');
+
+  // Hapus placeholder kosong kalau ada
+  const empty = container.querySelector('[style*="flex:1"]');
+  if (empty) empty.remove();
+
+  const isAdmin = msg.from === 'admin';
+  const time    = new Date(msg.time).toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+  const who     = isAdmin ? 'Admin' : 'Pengguna';
+
+  const div = document.createElement('div');
+  div.className = 'msg-row ' + (isAdmin ? 'from-admin' : 'from-user');
+  div.innerHTML = `
+    <div class="msg-bubble">${escHtml(msg.text)}</div>
+    <div class="msg-meta">${who} · ${time}</div>
+  `;
+  container.appendChild(div);
+
+  if (scroll) container.scrollTop = container.scrollHeight;
+}
+
+// ═══ KIRIM BALASAN ════════════════════════════════
+function sendReply(){
+  if (!activeSession || !socket) return;
+  const inp = document.getElementById('replyInput');
+  const txt = inp.value.trim();
+  if (!txt) return;
+
+  socket.emit('admin_reply', { sessionId: activeSession, text: txt });
+  inp.value = '';
+  autoResize(inp);
+}
+
+function handleReplyKey(e){
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendReply(); }
+}
+
+// Kirim typing ke user
+let typingTimeout;
+document.addEventListener('input', (e) => {
+  if (e.target.id === 'replyInput' && activeSession && socket) {
+    socket.emit('admin_typing', { sessionId: activeSession });
+  }
+});
+
+// ═══ STATS ════════════════════════════════════════
+function updateStats(){
+  document.getElementById('statTotal').textContent   = sessions.length;
+  document.getElementById('statOnline').textContent  = sessions.filter(s => s.online).length;
+  document.getElementById('statUnread').textContent  = sessions.reduce((acc,s) => acc + (s.unread||0), 0);
+}
+
+// ═══ HELPERS ══════════════════════════════════════
+function autoResize(el){
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 110) + 'px';
+}
+
+function escHtml(s){
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+// Auto connect on load (login akan handle auth)
+window.addEventListener('load', () => {
+  initSocket(null);
+});
+</script>
+</body>
+</html>

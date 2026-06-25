@@ -3,456 +3,1109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FDeveloper - Maintenance</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<title>FDeveloper Indonesia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+:root{
+  --bg:#09090E;
+  --bg2:#0F0F18;
+  --bg3:#141420;
+  --bg4:#1A1A28;
+  --ln:rgba(255,255,255,.055);
+  --ln2:rgba(255,255,255,.10);
+  --t1:#EEEDF8;
+  --t2:#9996B2;
+  --t3:#56556E;
+  --acc:#6C63FF;
+  --acc2:#A89EFF;
+  --rose:#FF5C8A;
+  --rose2:#FF8CB0;
+  --ga:rgba(108,99,255,.15);
+  --gr:rgba(255,92,138,.12);
 }
 
-body{
-min-height:100vh;
-background:#070b14;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-position:relative;
-color:#fff;
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);line-height:1.65;overflow-x:hidden}
+
+/* noise */
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
+
+/* ═══ NAVBAR ═══════════════════════════════════ */
+nav{
+  position:fixed;inset:0 0 auto 0;z-index:200;
+  height:64px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(20px,5vw,80px);
+  background:rgba(9,9,14,.75);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--ln);
 }
 
-/* Background */
+/* Logo */
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none}
 
-body::before{
-content:'';
-position:absolute;
-width:700px;
-height:700px;
-background:#ff4f8b;
-border-radius:50%;
-filter:blur(250px);
-opacity:.12;
-top:-300px;
-right:-300px;
+.logo-mark{
+  width:36px;height:36px;
+  background:var(--acc);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;flex-shrink:0;
+}
+.logo-mark::before{
+  content:'';position:absolute;
+  width:2.5px;height:54px;background:var(--rose);
+  right:9px;top:-8px;transform:rotate(22deg);
+  border-radius:2px;opacity:.65;
+}
+.logo-mark-f{
+  font-family:'Syne',sans-serif;font-size:19px;font-weight:800;
+  color:#fff;position:relative;z-index:2;
+}
+.logo-mark-d{
+  font-family:'Syne',sans-serif;font-size:11px;font-weight:700;
+  color:var(--rose);position:absolute;bottom:3px;right:4px;z-index:2;
+}
+.logo-text b{
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+  color:var(--t1);display:block;line-height:1.1;letter-spacing:-.2px;
+}
+.logo-text small{
+  font-size:9px;font-weight:500;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--acc2);
 }
 
-body::after{
-content:'';
-position:absolute;
-width:700px;
-height:700px;
-background:#00ff88;
-border-radius:50%;
-filter:blur(250px);
-opacity:.08;
-left:-300px;
-bottom:-300px;
+.nav-menu{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-menu a{font-size:13px;font-weight:500;color:var(--t2);text-decoration:none;transition:color .2s}
+.nav-menu a:hover{color:var(--t1)}
+.nav-pill{background:var(--acc)!important;color:#fff!important;padding:8px 18px!important;border-radius:50px!important;font-size:13px!important;transition:opacity .2s!important}
+.nav-pill:hover{opacity:.82}
+
+/* ═══ HERO ══════════════════════════════════════ */
+.hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;
+  padding:120px clamp(20px,5vw,80px) 80px;
+  overflow:hidden;
 }
 
-.particle{
-position:absolute;
-width:2px;
-height:2px;
-background:white;
-border-radius:50%;
-opacity:.35;
-animation:float linear infinite;
+.hero-grid{
+  position:absolute;inset:0;z-index:0;
+  background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 75% 65% at 55% 45%,black 30%,transparent 80%);
 }
 
-@keyframes float{
-from{
-transform:translateY(110vh);
-}
-to{
-transform:translateY(-100px);
-}
-}
+.blob{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+.b1{width:520px;height:520px;background:var(--ga);filter:blur(110px);top:-120px;right:-60px}
+.b2{width:380px;height:380px;background:var(--gr);filter:blur(90px);bottom:-60px;left:-80px}
 
-.container{
-width:92%;
-max-width:1350px;
-display:grid;
-grid-template-columns:700px 1fr;
-gap:60px;
-align-items:center;
-position:relative;
-z-index:5;
+.hero-inner{
+  position:relative;z-index:1;max-width:1120px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
 }
 
-/* TERMINAL */
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:var(--acc2);margin-bottom:22px;
+}
+.hero-eyebrow::before{content:'';display:block;width:22px;height:1px;background:var(--acc2)}
 
-.terminal{
-height:500px;
-background:rgba(12,12,12,.82);
-backdrop-filter:blur(20px);
-border-radius:18px;
-overflow:hidden;
-border:1px solid rgba(255,255,255,.08);
-box-shadow:
-0 30px 80px rgba(0,0,0,.65),
-0 0 50px rgba(255,79,139,.1);
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(34px,5vw,60px);font-weight:800;
+  line-height:1.07;letter-spacing:-1.5px;
+  color:var(--t1);margin-bottom:22px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(130deg,var(--acc2) 0%,var(--rose2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 
-.terminal-header{
-height:48px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 18px;
-background:rgba(255,255,255,.03);
-border-bottom:1px solid rgba(255,255,255,.05);
+.hero-lead{font-size:15px;color:var(--t2);max-width:390px;margin-bottom:38px;line-height:1.82}
+
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-solid{
+  display:inline-block;background:var(--acc);color:#fff;
+  padding:12px 26px;border-radius:50px;font-size:13px;font-weight:600;
+  text-decoration:none;letter-spacing:.2px;
+  transition:opacity .2s,transform .15s;
+}
+.btn-solid:hover{opacity:.82;transform:translateY(-2px)}
+.btn-ghost{
+  display:inline-block;background:transparent;color:var(--t2);
+  padding:12px 26px;border-radius:50px;font-size:13px;font-weight:500;
+  text-decoration:none;border:1px solid var(--ln2);
+  transition:border-color .2s,color .2s,transform .15s;
+}
+.btn-ghost:hover{border-color:var(--acc);color:var(--acc2);transform:translateY(-2px)}
+
+/* floating cards */
+.hero-viz{position:relative;height:360px;display:flex;align-items:center;justify-content:center}
+.fcard{
+  position:absolute;border:1px solid var(--ln2);border-radius:16px;
+  padding:18px 20px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.fcard-main{width:252px;top:10px;left:8px;background:rgba(108,99,255,.13);border-color:rgba(108,99,255,.32);animation:flt1 4.5s ease-in-out infinite}
+.fcard-stat{width:210px;top:148px;right:0;background:rgba(20,20,32,.88);animation:flt2 5s ease-in-out infinite}
+.fcard-tag{width:182px;bottom:8px;left:38px;background:rgba(255,92,138,.09);border-color:rgba(255,92,138,.28);animation:flt3 5.5s ease-in-out infinite}
+@keyframes flt1{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes flt2{0%,100%{transform:translateY(0) rotate(2deg)}50%{transform:translateY(-9px) rotate(2deg)}}
+@keyframes flt3{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-7px) rotate(-1.5deg)}}
+.fc-lbl{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:7px}
+.fc-ttl{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--t1);line-height:1.25;margin-bottom:4px}
+.fc-sub{font-size:11px;color:var(--t3)}
+.fc-big{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:var(--acc2);line-height:1.55}
+.fc-tag{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--rose2)}
+
+/* ═══ SECTION ═══════════════════════════════════ */
+.sec{padding:92px clamp(20px,5vw,80px);position:relative}
+.sec-inner{max-width:1120px;margin:0 auto}
+.divider{width:100%;height:1px;background:var(--ln)}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--acc2);margin-bottom:14px;
+}
+.eyebrow::before{content:'';display:block;width:16px;height:1px;background:currentColor}
+.eyebrow.rose{color:var(--rose2)}.eyebrow.rose::before{background:var(--rose2)}
+
+h2.sec-ttl{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(28px,4vw,46px);font-weight:800;
+  line-height:1.06;letter-spacing:-1px;color:var(--t1);margin-bottom:13px;
+}
+h2.sec-ttl em{
+  font-style:normal;
+  background:linear-gradient(130deg,var(--acc2),var(--rose2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.sec-lead{font-size:15px;color:var(--t2);max-width:520px;margin-bottom:50px;line-height:1.82}
+
+/* ═══ ABOUT ══════════════════════════════════════ */
+#about{background:var(--bg2)}
+.about-grid{display:grid;grid-template-columns:340px 1fr;gap:80px;align-items:start}
+.about-emblem{position:sticky;top:96px}
+
+.emblem-box{width:196px;height:196px;position:relative;margin:0 auto 24px}
+.eb-back{
+  position:absolute;inset:0;border-radius:34px;
+  background:var(--bg3);border:1px solid rgba(108,99,255,.22);
+  transform:rotate(-6deg);
+}
+.eb-front{
+  position:absolute;inset:0;border-radius:34px;
+  background:var(--bg3);border:1px solid rgba(108,99,255,.38);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.eb-front::after{
+  content:'';position:absolute;
+  width:3px;height:240px;background:var(--rose);
+  right:46px;top:-18px;transform:rotate(22deg);
+  border-radius:2px;opacity:.45;
+}
+.eb-text{position:relative;z-index:2;text-align:center;line-height:.88}
+.eb-f{font-family:'Syne',sans-serif;font-size:78px;font-weight:800;color:var(--t1);display:block;letter-spacing:-4px}
+.eb-d{font-family:'Syne',sans-serif;font-size:42px;font-weight:800;color:var(--rose2);display:block;letter-spacing:-2px}
+
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.s-box{
+  background:var(--bg3);border:1px solid var(--ln2);
+  border-radius:10px;padding:13px 8px;text-align:center;
+  transition:border-color .2s;
+}
+.s-box:hover{border-color:rgba(108,99,255,.38)}
+.s-box strong{
+  display:block;font-family:'Syne',sans-serif;
+  font-size:18px;font-weight:800;color:var(--acc2);
+  line-height:1;margin-bottom:4px;
+}
+.s-box span{font-size:9.5px;color:var(--t3);font-weight:500}
+
+.about-copy p{font-size:15px;color:var(--t2);line-height:1.85;margin-bottom:18px}
+.values{margin-top:32px;display:flex;flex-direction:column;gap:10px}
+.val-row{
+  display:flex;align-items:flex-start;gap:13px;
+  padding:15px 17px;background:var(--bg3);
+  border:1px solid var(--ln);border-radius:14px;transition:border-color .2s;
+}
+.val-row:hover{border-color:rgba(108,99,255,.28)}
+.val-ico{
+  width:32px;height:32px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;background:var(--bg4);
+}
+.val-row h4{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:2px}
+.val-row p{font-size:12px;color:var(--t3);margin:0;line-height:1.55}
+
+/* ═══ SERVICES ═══════════════════════════════════ */
+#services{background:var(--bg)}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.srv-card{
+  padding:24px 20px;border:1px solid var(--ln);
+  border-radius:16px;background:var(--bg2);
+  transition:border-color .25s,transform .2s;cursor:default;
+}
+.srv-card:hover{border-color:rgba(108,99,255,.38);transform:translateY(-4px)}
+.srv-ico{
+  width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;margin-bottom:14px;background:var(--bg3);
+}
+.srv-card h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--t1);margin-bottom:7px}
+.srv-card p{font-size:13px;color:var(--t3);line-height:1.7}
+
+/* ═══ APPS ═══════════════════════════════════════ */
+#apps{background:var(--bg2)}
+#apps::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);
+  background-size:38px 38px;
+  mask-image:radial-gradient(ellipse 85% 75% at 50% 50%,black 15%,transparent 68%);
+}
+.apps-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(224px,1fr));
+  gap:16px;position:relative;z-index:1;
+}
+.app-card{
+  background:var(--bg3);border:1px solid var(--ln);
+  border-radius:20px;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:border-color .25s,transform .2s;
+}
+.app-card:hover{border-color:rgba(108,99,255,.32);transform:translateY(-5px)}
+.app-top{height:3px;background:linear-gradient(90deg,var(--acc),var(--rose))}
+.app-body{padding:20px 18px 15px;flex:1;display:flex;flex-direction:column}
+.app-ico{
+  width:46px;height:46px;border-radius:12px;
+  background:var(--bg4);display:flex;align-items:center;justify-content:center;
+  font-size:21px;margin-bottom:13px;flex-shrink:0;
+  border:1px solid var(--ln);
+}
+.badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--acc2);background:rgba(108,99,255,.10);
+  border:1px solid rgba(108,99,255,.20);
+  border-radius:50px;padding:3px 10px;margin-bottom:9px;width:fit-content;
+}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--acc2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.6)}}
+.app-card h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--t1);margin-bottom:5px;line-height:1.25}
+.app-desc{font-size:12px;color:var(--t3);line-height:1.65;flex:1}
+.app-plat{
+  display:flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:600;color:var(--t3);
+  margin-top:13px;padding-top:13px;border-top:1px solid var(--ln);
+}
+.wsq{width:10px;height:10px;display:grid;grid-template-columns:1fr 1fr;gap:1.5px}
+.wsq span{display:block;border-radius:.5px;background:#0078D4}
+.app-dl{
+  border-top:1px solid var(--ln);background:var(--bg4);
+  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.dl-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.dl-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3)}
+.dl-lnk{
+  font-size:11px;font-weight:500;color:var(--acc2);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:140px;font-style:italic;
+}
+.dl-btn{
+  width:30px;height:30px;border-radius:8px;
+  background:var(--bg3);border:1px solid var(--ln2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:background .15s,border-color .15s;position:relative;
+}
+.dl-btn:hover{background:var(--acc);border-color:var(--acc)}
+.dl-btn:hover svg path{stroke:#fff}
+.dl-btn::after{
+  content:'Disalin!';position:absolute;top:-28px;right:0;
+  background:var(--acc);color:#fff;font-size:10px;font-weight:600;
+  padding:3px 8px;border-radius:4px;white-space:nowrap;
+  opacity:0;transform:translateY(4px);transition:opacity .2s,transform .2s;pointer-events:none;
+}
+.dl-btn.copied::after{opacity:1;transform:translateY(0)}
+
+/* Mystery card */
+.app-card.mystery-wrap{position:relative;min-height:300px}
+#rev4{display:none}
+.mystery-cover{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background:var(--bg4);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;z-index:10;border-radius:inherit;
+  transition:opacity .3s;border:1px dashed rgba(108,99,255,.32);
+}
+#rev4:checked ~ .mystery-cover{opacity:0;pointer-events:none;visibility:hidden}
+.mystery-q{font-size:3rem;animation:boun 2s infinite;margin-bottom:10px}
+@keyframes boun{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.mystery-txt{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--acc2)}
+
+/* ═══ TEAM ════════════════════════════════════════ */
+#team{background:var(--bg)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.team-card{
+  border:1px solid var(--ln);border-radius:20px;overflow:hidden;
+  background:var(--bg2);transition:transform .2s,border-color .2s;
+}
+.team-card:hover{transform:translateY(-4px);border-color:rgba(108,99,255,.28)}
+.team-top{
+  height:118px;display:flex;align-items:center;justify-content:center;
+  position:relative;background:var(--bg3);border-bottom:1px solid var(--ln);
+}
+.team-top::before{
+  content:'';position:absolute;inset:0;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 18px,var(--ln) 18px,var(--ln) 19px);
+  opacity:.5;
+}
+.avatar{
+  width:62px;height:62px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:22px;font-weight:800;
+  color:#fff;position:relative;z-index:1;
+  border:2px solid rgba(255,255,255,.10);
+}
+.team-body{padding:18px 20px}
+.team-body h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--t1);margin-bottom:4px}
+.role{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc2);display:block;margin-bottom:9px}
+.team-body p{font-size:12px;color:var(--t3);line-height:1.7}
+
+/* ═══ CONTACT ════════════════════════════════════ */
+#contact{
+  background:var(--bg2);text-align:center;
+  padding:92px clamp(20px,5vw,80px);position:relative;overflow:hidden;
+}
+#contact::before{
+  content:'';position:absolute;
+  width:600px;height:600px;border-radius:50%;
+  background:var(--ga);filter:blur(130px);
+  top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
+}
+.contact-sub{
+  font-size:15px;color:var(--t2);
+  max-width:430px;margin:0 auto 36px;
+  line-height:1.82;position:relative;
+}
+.contact-email-wrap{display:inline-block;border-bottom:1px solid var(--rose);padding-bottom:5px;position:relative}
+.contact-email{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(17px,3vw,28px);font-weight:700;
+  color:var(--t1);text-decoration:none;letter-spacing:-.4px;
+  transition:color .2s;
+}
+.contact-email:hover{color:var(--rose2)}
+
+/* ═══ FOOTER ═════════════════════════════════════ */
+footer{
+  background:var(--bg);padding:22px clamp(20px,5vw,80px);
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--ln);
+}
+.foot-brand{display:flex;align-items:center;gap:9px}
+.foot-lm{
+  width:25px;height:25px;background:var(--acc);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.foot-lm::before{
+  content:'';position:absolute;width:2px;height:34px;
+  background:var(--rose);right:7px;top:-5px;
+  transform:rotate(22deg);border-radius:1px;opacity:.58;
+}
+.foot-lm .ff{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:#fff;position:relative;z-index:2}
+.foot-brand span{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;color:var(--t3)}
+.foot-copy{font-size:11px;color:var(--t3)}
+.foot-nav{display:flex;gap:18px}
+.foot-nav a{font-size:12px;color:var(--t3);text-decoration:none;transition:color .2s}
+.foot-nav a:hover{color:var(--t2)}
+
+/* ═══ SCROLL REVEAL ══════════════════════════════ */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+
+/* ═══ CHAT WIDGET ════════════════════════════════ */
+/* --- Tombol Chat --- */
+.chat-fab{
+  position:fixed;bottom:28px;right:28px;z-index:500;
+  width:56px;height:56px;border-radius:50%;
+  background:var(--acc);
+  box-shadow:0 4px 24px rgba(108,99,255,.45);
+  cursor:pointer;border:none;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .2s,box-shadow .2s;
+  outline:none;
+}
+.chat-fab:hover{transform:scale(1.08);box-shadow:0 6px 32px rgba(108,99,255,.60)}
+.chat-fab:active{transform:scale(.96)}
+
+/* Logo Chat CSS buatan sendiri */
+.chat-ico{
+  width:26px;height:26px;position:relative;
+}
+/* Bubble utama */
+.chat-ico::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:#fff;
+  border-radius:8px 8px 8px 2px;
+}
+/* Ekor bubble */
+.chat-ico::after{
+  content:'';
+  position:absolute;
+  bottom:-5px;left:2px;
+  width:10px;height:10px;
+  background:#fff;
+  clip-path:polygon(0 0,100% 0,0 100%);
+  border-radius:0 0 0 3px;
+}
+/* Titik-titik di dalam bubble */
+.chat-dots{
+  position:absolute;
+  inset:0;
+  display:flex;align-items:center;justify-content:center;
+  gap:3px;z-index:2;
+}
+.chat-dots span{
+  width:4px;height:4px;border-radius:50%;
+  background:var(--acc);
+  animation:dotBounce 1.4s infinite;
+}
+.chat-dots span:nth-child(2){animation-delay:.2s}
+.chat-dots span:nth-child(3){animation-delay:.4s}
+@keyframes dotBounce{
+  0%,80%,100%{transform:translateY(0)}
+  40%{transform:translateY(-4px)}
 }
 
-.left-header{
-display:flex;
-align-items:center;
-gap:12px;
-font-size:14px;
-color:#ddd;
+/* Badge notif */
+.chat-notif{
+  position:absolute;top:-3px;right:-3px;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--rose);border:2px solid var(--bg);
+  font-size:9px;font-weight:700;color:#fff;
+  display:flex;align-items:center;justify-content:center;
 }
 
-.win-logo{
-width:14px;
-height:14px;
-background:#00a4ef;
-box-shadow:
-16px 0 #00a4ef,
-0 16px #00a4ef,
-16px 16px #00a4ef;
-transform:scale(.35);
+/* --- Panel Chat --- */
+.chat-panel{
+  position:fixed;bottom:96px;right:28px;z-index:499;
+  width:340px;height:480px;
+  background:var(--bg2);border:1px solid var(--ln2);
+  border-radius:20px;
+  display:flex;flex-direction:column;
+  box-shadow:0 20px 60px rgba(0,0,0,.55);
+  transform:translateY(20px) scale(.95);
+  opacity:0;pointer-events:none;
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1),opacity .22s ease;
+  overflow:hidden;
 }
+.chat-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:all}
 
-.window-buttons{
-display:flex;
-gap:8px;
+/* Header panel */
+.chat-head{
+  padding:16px 18px;
+  background:var(--bg3);border-bottom:1px solid var(--ln);
+  display:flex;align-items:center;gap:11px;
+  flex-shrink:0;
 }
-
-.circle{
-width:12px;
-height:12px;
-border-radius:50%;
+.chat-head-ico{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--acc);display:flex;align-items:center;justify-content:center;
+  position:relative;flex-shrink:0;overflow:hidden;
 }
-
-.red{background:#ff5f57;}
-.yellow{background:#febc2e;}
-.green{background:#28c840;}
-
-#terminal{
-height:452px;
-overflow:hidden;
-padding:20px;
-font-family:Consolas,monospace;
-font-size:14px;
-line-height:1.7;
-color:#00ff6a;
-white-space:pre-wrap;
+.chat-head-ico::before{
+  content:'';position:absolute;
+  width:2px;height:50px;background:var(--rose);
+  right:8px;top:-8px;transform:rotate(22deg);
+  border-radius:1px;opacity:.55;
 }
-
-/* RIGHT */
-
-.right{
-text-align:center;
-display:flex;
-flex-direction:column;
-align-items:center;
+.chat-head-ico .chi-f{
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:800;
+  color:#fff;position:relative;z-index:2;
 }
-
-.logo{
-width:340px;
-max-width:100%;
-margin-bottom:20px;
-
-filter:
-drop-shadow(0 0 20px rgba(255,79,139,.5))
-drop-shadow(0 0 60px rgba(255,79,139,.3));
-
-animation:logoFloat 4s ease-in-out infinite;
+.chat-head-info{flex:1}
+.chat-head-info strong{
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  color:var(--t1);display:block;
 }
+.chat-head-info span{font-size:11px;color:var(--t3)}
+.chat-status{
+  display:flex;align-items:center;gap:5px;
+  font-size:11px;color:var(--t3);
+}
+.chat-status::before{
+  content:'';width:7px;height:7px;border-radius:50%;
+  background:#4CAF50;flex-shrink:0;
+}
+.chat-close{
+  width:28px;height:28px;border-radius:8px;border:none;
+  background:var(--bg4);color:var(--t2);cursor:pointer;
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+  transition:background .15s;
+}
+.chat-close:hover{background:var(--ln2)}
 
-@keyframes logoFloat{
-0%,100%{
-transform:translateY(0);
-}
-50%{
-transform:translateY(-12px);
-}
-}
+/* Messages area */
+.chat-msgs{flex:1;overflow-y:auto;padding:16px 14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.chat-msgs::-webkit-scrollbar{width:3px}
+.chat-msgs::-webkit-scrollbar-track{background:transparent}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--ln2);border-radius:2px}
 
-h1{
-font-size:3.2rem;
-margin-bottom:15px;
+.msg{max-width:80%;display:flex;flex-direction:column;gap:3px}
+.msg.admin{align-self:flex-start}
+.msg.user{align-self:flex-end}
+.msg-bubble{
+  padding:9px 13px;border-radius:14px;
+  font-size:13px;line-height:1.6;word-break:break-word;
 }
+.admin .msg-bubble{
+  background:var(--bg4);color:var(--t1);
+  border-radius:4px 14px 14px 14px;
+  border:1px solid var(--ln2);
+}
+.user .msg-bubble{
+  background:var(--acc);color:#fff;
+  border-radius:14px 14px 4px 14px;
+}
+.msg-time{font-size:10px;color:var(--t3)}
+.admin .msg-time{padding-left:2px}
+.user .msg-time{text-align:right;padding-right:2px}
 
-.highlight{
-color:#ff4f8b;
+/* Typing indicator */
+.typing-ind{
+  display:none;align-items:center;gap:4px;
+  padding:9px 13px;background:var(--bg4);
+  border:1px solid var(--ln2);border-radius:4px 14px 14px 14px;
+  width:fit-content;
 }
+.typing-ind.show{display:flex}
+.typing-ind span{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--t3);animation:typ .9s infinite;
+}
+.typing-ind span:nth-child(2){animation-delay:.2s}
+.typing-ind span:nth-child(3){animation-delay:.4s}
+@keyframes typ{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
 
-.desc{
-max-width:550px;
-opacity:.8;
-line-height:1.9;
+/* Input area */
+.chat-input-area{
+  padding:12px 14px;border-top:1px solid var(--ln);
+  background:var(--bg3);flex-shrink:0;
+  display:flex;gap:8px;align-items:flex-end;
 }
+.chat-input-wrap{
+  flex:1;background:var(--bg4);border:1px solid var(--ln2);
+  border-radius:12px;display:flex;align-items:center;padding:0 12px;
+  transition:border-color .2s;
+}
+.chat-input-wrap:focus-within{border-color:rgba(108,99,255,.4)}
+.chat-input{
+  flex:1;background:transparent;border:none;outline:none;
+  color:var(--t1);font-size:13px;font-family:'Inter',sans-serif;
+  padding:10px 0;resize:none;line-height:1.5;
+}
+.chat-input::placeholder{color:var(--t3)}
+.chat-send{
+  width:34px;height:34px;border-radius:10px;
+  background:var(--acc);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .2s;flex-shrink:0;
+}
+.chat-send:hover{opacity:.82}
+.chat-send svg{pointer-events:none}
 
-.status{
-margin-top:25px;
-display:flex;
-align-items:center;
-gap:12px;
+/* Empty chat hint */
+.chat-empty{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;
+  color:var(--t3);text-align:center;padding:20px;
 }
+.chat-empty-ico{font-size:32px;margin-bottom:4px}
+.chat-empty p{font-size:13px;line-height:1.6}
+.chat-empty small{font-size:11px;color:var(--t3);opacity:.6}
 
-.status-dot{
-width:12px;
-height:12px;
-border-radius:50%;
-background:#00ff6a;
-animation:pulse 1.4s infinite;
+/* ═══ RESPONSIVE ═════════════════════════════════ */
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-viz{display:none}
+  .about-grid{grid-template-columns:1fr}
+  .about-emblem{position:static}
+  .srv-grid{grid-template-columns:1fr 1fr}
+  .team-grid{grid-template-columns:1fr;max-width:380px}
+  nav .nav-menu{display:none}
+  footer{flex-direction:column;gap:13px;text-align:center}
 }
-
-@keyframes pulse{
-0%{
-box-shadow:0 0 0 0 rgba(0,255,106,.8);
+@media(max-width:580px){
+  .srv-grid{grid-template-columns:1fr}
+  .apps-grid{grid-template-columns:1fr 1fr}
+  .chat-panel{width:calc(100vw - 32px);right:16px;bottom:86px}
+  .chat-fab{right:16px;bottom:16px}
 }
-100%{
-box-shadow:0 0 0 18px rgba(0,255,106,0);
-}
-}
-
-@media(max-width:1150px){
-
-.container{
-grid-template-columns:1fr;
-}
-
-.terminal{
-width:100%;
-}
-
-h1{
-font-size:2.3rem;
-}
-
-.logo{
-width:260px;
-}
-
-}
-
 </style>
 </head>
 <body>
 
+<!-- ══════════════ NAVBAR ═════════════════════ -->
+<nav>
+  <a class="logo" href="#">
+    <div class="logo-mark">
+      <span class="logo-mark-f">F</span>
+      <span class="logo-mark-d">D</span>
+    </div>
+    <div class="logo-text">
+      <b>FDeveloper</b>
+      <small>Indonesia</small>
+    </div>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="#about">Tentang Kami</a></li>
+    <li><a href="#services">Layanan</a></li>
+    <li><a href="#apps">Aplikasi Windows</a></li>
+    <li><a href="#team">Tim</a></li>
+    <li><a href="#contact" class="nav-pill">Kontak</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════ HERO ═══════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="hero-inner">
+    <div class="rv">
+      <div class="hero-eyebrow">FDeveloper 🇮🇩</div>
+      <h1>Developer indonesia<br><em>yang tercipta oleh<br>kesemangatan anak bangsa.</em></h1>
+      <p class="hero-lead">Kami merancang aplikasi Windows &amp; web yang ringan, elegan, dan benar-benar berguna — lahir dari Indonesia, untuk Indonesia.</p>
+      <div class="hero-ctas">
+        <a href="#apps" class="btn-solid">Lihat Aplikasi →</a>
+        <a href="#about" class="btn-ghost">Tentang Kami</a>
+      </div>
+    </div>
+    <div class="hero-viz rv">
+      <div class="fcard fcard-main">
+        <div class="fc-lbl">Proyek Terbaru</div>
+        <div class="fc-ttl">CLS [command line studio]</div>
+        <div class="fc-sub">Segera Hadir — 2025</div>
+      </div>
+      <div class="fcard fcard-stat">
+        <div class="fc-lbl">Note</div>
+        <div class="fc-big">Kami sedang mencari team!<br>Jadilah team kami secara gratis!</div>
+        <div class="fc-sub" style="margin-top:6px">email : Jadicerdasyuuk7@gmail.com</div>
+      </div>
+      <div class="fcard fcard-tag">
+        <div class="fc-lbl">Berdiri</div>
+        <div class="fc-tag">2026</div>
+        <div class="fc-sub">Kami berdiri di tahun 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ ABOUT ══════════════════════ -->
+<section class="sec" id="about">
+  <div class="sec-inner">
+    <div class="about-grid">
+      <div class="about-emblem rv">
+        <div class="emblem-box">
+          <div class="eb-back"></div>
+          <div class="eb-front">
+            <div class="eb-text">
+              <span class="eb-f">F</span>
+              <span class="eb-d">Dev</span>
+            </div>
+          </div>
+        </div>
+        <div class="stats3">
+          <div class="s-box"><strong>2026</strong><span>tahun berdiri</span></div>
+          <div class="s-box"><strong>3</strong><span>Aplikasi</span></div>
+          <div class="s-box"><strong>24 Jun</strong><span>hari lahir</span></div>
+        </div>
+      </div>
+      <div class="about-copy rv">
+        <span class="eyebrow">Tentang Kami</span>
+        <h2 class="sec-ttl">Developer lokal,<br><em>semangat global.</em></h2>
+        <p>FDeveloper Di ketuai Oleh [Tn Faizan]</p>
+        <p>kami menciptkan aplikasi dan website yang bisa berjalan di broswer dan device kalian.</p>
+        <p>Email : jadicerdasyuuk7@gmail.com</p>
+        <div class="values">
+          <div class="val-row"><div class="val-ico">🎯</div><div><h4>Fokus pada Pengguna</h4><p>Kami mendengarkan kebutuhan nyata, bukan asumsi dari ruang rapat.</p></div></div>
+          <div class="val-row"><div class="val-ico">🔒</div><div><h4>Privasi &amp; Keamanan</h4><p>Data pengguna adalah amanah. Tidak dijual, tidak disalahgunakan.</p></div></div>
+          <div class="val-row"><div class="val-ico">🇮🇩</div><div><h4>Bangga Buatan Indonesia</h4><p>Dibuat di sini, untuk orang di sini. Dukungan dalam Bahasa Indonesia.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ SERVICES ═══════════════════ -->
+<section class="sec" id="services">
+  <div class="sec-inner">
+    <span class="eyebrow rose">Layanan Kami</span>
+    <h2 class="sec-ttl">Apa yang kami<br><em>kerjakan.</em></h2>
+    <p class="sec-lead">membuat aplikasi yang siap di jalankan.</p>
+    <div class="srv-grid">
+      <div class="srv-card rv"><div class="srv-ico">🖥️</div><h3>Aplikasi Windows</h3><p>Desktop app ringan yang berjalan mulus di Windows 10 &amp; 11, tanpa bloatware.</p></div>
+      <div class="srv-card rv"><div class="srv-ico">🌐</div><h3>Pengembangan Web</h3><p>Website dan web app modern, performa tinggi, dan pengalaman pengguna yang mulus.</p></div>
+      <div class="srv-card rv"><div class="srv-ico">📱</div><h3>Aplikasi Mobile</h3><p>Android &amp; iOS — responsif, cepat, dan mudah dipakai oleh semua kalangan usia.</p></div>
+      <div class="srv-card rv"><div class="srv-ico">⚡</div><h3>Otomasi &amp; Skrip</h3><p>Percepat pekerjaan berulang dengan tool otomasi yang kami rancang khusus.</p></div>
+      <div class="srv-card rv"><div class="srv-ico">🛡️</div><h3>Konsultasi IT</h3><p>Arsitektur dan panduan teknis yang tepat agar bisnis Anda berkembang tanpa hambatan.</p></div>
+      <div class="srv-card rv"><div class="srv-ico">🎨</div><h3>UI/UX Design</h3><p>Antarmuka yang estetik dan fungsional — karena tampil bagus dan mudah dipakai bukan pilihan.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ APPS ════════════════════════ -->
+<section class="sec" id="apps">
+  <div class="sec-inner">
+    <span class="eyebrow">Aplikasi yang telah kami buat</span>
+    <h2 class="sec-ttl">Aplikasi <em>Windows</em></h2>
+    <p class="sec-lead">Semua aplikasi sedang dalam tahap pengembangan, jika ada bug segera laporkan Ke email jadicerdasyuuk7@gmail.com</p>
+    <div class="apps-grid">
+
+      <!-- Card 1 -->
+      <div class="app-card rv">
+        <div class="app-top"></div>
+        <div class="app-body">
+          <div class="app-ico">🧹</div>
+          <span class="badge"><span class="dot"></span>Tersedia!</span>
+          <h3>CLdisk [CleanDisk]</h3>
+          <p class="app-desc">aplikasi pembersih pc windows dengan aman dan tidak mengandung Malware.</p>
+          <div class="app-plat"><div class="wsq"><span></span><span></span><span></span><span></span></div>Windows</div>
+        </div>
+        <div class="app-dl">
+          <div class="dl-info">
+            <span class="dl-lbl">Link Download</span>
+            <span class="dl-lnk" data-link="https://github.com/FDeveloperindonesia01/CLdisk-CleanDisk-/releases/download/2.0/CLdisk.exe">https://github.com/FDeveloperindonesia01/CLdisk-CleanDisk-/releases/download/2.0/CLdisk.exe</span>
+          </div>
+          <button class="dl-btn" onclick="copyLink(this)" title="Salin link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3" stroke="#A89EFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="app-card rv">
+        <div class="app-top"></div>
+        <div class="app-body">
+          <div class="app-ico">🗂️</div>
+          <span class="badge"><span class="dot"></span>Tersedia</span>
+          <h3>CLS [Command Line Studio]</h3>
+          <p class="app-desc">aplikasi yang mirip dengan cmd tetapi sudah otomatis terinstall node.js dan Python.</p>
+          <div class="app-plat"><div class="wsq"><span></span><span></span><span></span><span></span></div>Windows</div>
+        </div>
+        <div class="app-dl">
+          <div class="dl-info">
+            <span class="dl-lbl">Link Download</span>
+            <span class="dl-lnk" data-link="https://github.com/FDeveloperindonesia01/CLS-Command-Line-Studio-/releases/tag/1.0.0">https://github.com/FDeveloperindonesia01/CLS-Command-Line-Studio-/releases/tag/1.0.0</span>
+          </div>
+          <button class="dl-btn" onclick="copyLink(this)" title="Salin link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3" stroke="#A89EFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="app-card rv">
+        <div class="app-top"></div>
+        <div class="app-body">
+          <div class="app-ico">✒️</div>
+          <span class="badge"><span class="dot"></span>Baru</span>
+          <h3>FDevStudio</h3>
+          <p class="app-desc">Aplikasi FDevStudio adalah aplikasi pembuat website &amp; Aplikasi.</p>
+          <div class="app-plat"><div class="wsq"><span></span><span></span><span></span><span></span></div>Windows</div>
+        </div>
+        <div class="app-dl">
+          <div class="dl-info">
+            <span class="dl-lbl">Link Download</span>
+            <span class="dl-lnk" data-link="https://github.com/FDeveloperindonesia01/FDevStudio/releases/download/1.0.00/FDevStudio.exe">https://github.com/FDeveloperindonesia01/FDevStudio/releases/download/1.0.00/FDevStudio.exe</span>
+          </div>
+          <button class="dl-btn" onclick="copyLink(this)" title="Salin link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3" stroke="#A89EFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 4 — Mystery -->
+      <div class="app-card mystery-wrap rv">
+        <input type="checkbox" id="rev4">
+        <label for="rev4" class="mystery-cover">
+          <div class="mystery-q">❓</div>
+          <span class="mystery-txt">Klik untuk membuka</span>
+        </label>
+        <div class="app-top"></div>
+        <div class="app-body">
+          <div class="app-ico">😜</div>
+          <span class="badge"><span class="dot"></span>RAHASIAAAA</span>
+          <h3>RAHASIAAAAA</h3>
+          <p class="app-desc">RAHASIAAAAAAAA</p>
+          <div class="app-plat"><div class="wsq"><span></span><span></span><span></span><span></span></div>Windows</div>
+        </div>
+        <div class="app-dl">
+          <div class="dl-info">
+            <span class="dl-lbl">Link Download</span>
+            <span class="dl-lnk" data-link="RAHASIAAAAAAAAAAAAAAAAAAAAAA">RAHASIAAAAAAAAAAAAAAAAAA</span>
+          </div>
+          <button class="dl-btn" onclick="copyLink(this)" title="Salin link">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3" stroke="#A89EFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ TEAM ════════════════════════ -->
+<section class="sec" id="team">
+  <div class="sec-inner">
+    <span class="eyebrow">Tim Kami</span>
+    <h2 class="sec-ttl">Orang-orang di balik<br><em>FDeveloper.</em></h2>
+    <p class="sec-lead">Kecil dalam jumlah, besar dalam semangat. Setiap orang di sini peduli pada apa yang kami buat.</p>
+    <div class="team-grid">
+      <div class="team-card rv">
+        <div class="team-top"><div class="avatar" style="background:var(--acc)">F</div></div>
+        <div class="team-body">
+          <h3>Founder FDeveloper</h3>
+          <span class="role">Founder &amp; Lead Developer</span>
+          <p>Arsitek utama visi dan kode. Percaya bahwa software bagus adalah hak semua orang, bukan hanya perusahaan besar.</p>
+        </div>
+      </div>
+      <div class="team-card rv">
+        <div class="team-top"><div class="avatar" style="background:var(--rose)">D</div></div>
+        <div class="team-body">
+          <h3>Tim Design</h3>
+          <span class="role">UI/UX &amp; Visual</span>
+          <p>Mengubah fungsi menjadi pengalaman. Tidak puas dengan "cukup bagus" — selalu mencari yang lebih elegan.</p>
+        </div>
+      </div>
+      <div class="team-card rv">
+        <div class="team-top"><div class="avatar" style="background:#2E7D32">Q</div></div>
+        <div class="team-body">
+          <h3>Tim QA &amp; Support</h3>
+          <span class="role">Quality &amp; Care</span>
+          <p>Penjaga kualitas dan wajah FDeveloper di mata pengguna. Setiap masalah diselesaikan, setiap pertanyaan dijawab.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ CONTACT ════════════════════ -->
+<section id="contact">
+  <div class="sec-inner" style="max-width:1120px;margin:0 auto;text-align:center">
+    <span class="eyebrow rose" style="display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--rose2);margin-bottom:14px">
+      <span style="display:block;width:16px;height:1px;background:var(--rose2)"></span>Kontak
+    </span>
+    <h2 class="sec-ttl" style="position:relative">Ada proyek atau<br><em>pertanyaan?</em></h2>
+    <p class="contact-sub">Kami terbuka untuk kolaborasi, pertanyaan teknis, maupun diskusi ide. Kirim email dan kami akan segera merespons.</p>
+    <div class="contact-email-wrap">
+      <a href="mailto:jadicerdasyuuk7@gmail.com" class="contact-email">jadicerdasyuuk7@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ═════════════════════ -->
+<footer>
+  <div class="foot-brand">
+    <div class="foot-lm"><span class="ff">F</span></div>
+    <span>FDeveloper Indonesia</span>
+  </div>
+  <div class="foot-copy">© 2026 FDeveloper Indonesia · Dibuat dengan ❤️ di Indonesia</div>
+  <nav class="foot-nav">
+    <a href="#about">Tentang</a>
+    <a href="#apps">Aplikasi</a>
+    <a href="#contact">Kontak</a>
+  </nav>
+</footer>
+
+<!-- ══════════════ CHAT WIDGET ════════════════ -->
+<!-- Tombol FAB -->
+<button class="chat-fab" id="chatFab" onclick="toggleChat()" aria-label="Buka chat">
+  <div class="chat-ico">
+    <div class="chat-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="chat-notif" id="chatNotif">1</div>
+</button>
+
+<!-- Panel Chat -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-head-ico"><span class="chi-f">F</span></div>
+    <div class="chat-head-info">
+      <strong>FDeveloper Support</strong>
+      <div class="chat-status">Online</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="chat-empty" id="chatEmpty">
+      <div class="chat-empty-ico">💬</div>
+      <p>Halo! Ada yang bisa kami bantu?</p>
+      <small>Admin akan membalas secepatnya</small>
+    </div>
+    <div class="typing-ind" id="typingInd">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="chat-input-area">
+    <div class="chat-input-wrap">
+      <textarea class="chat-input" id="chatInput" placeholder="Tulis pesan..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    </div>
+    <button class="chat-send" onclick="sendMsg()" aria-label="Kirim">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
 <script>
+/* ── Scroll reveal ── */
+const rvEls = document.querySelectorAll('.rv');
+const rvOb = new IntersectionObserver((entries) => {
+  entries.forEach((e,i) => {
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('in'), i*60);
+      rvOb.unobserve(e.target);
+    }
+  });
+},{threshold:.08,rootMargin:'0px 0px -36px 0px'});
+rvEls.forEach(el=>rvOb.observe(el));
 
-for(let i=0;i<50;i++){
-
-const p=document.createElement("div");
-
-p.className="particle";
-
-p.style.left=Math.random()*100+"%";
-
-p.style.animationDuration=(6+Math.random()*12)+"s";
-
-document.body.appendChild(p);
-
+/* ── Copy link ── */
+function copyLink(btn){
+  const lnk = btn.closest('.app-dl').querySelector('.dl-lnk');
+  const txt = lnk.getAttribute('data-link') || lnk.textContent.trim();
+  navigator.clipboard.writeText(txt).then(()=>{
+    btn.classList.add('copied');
+    setTimeout(()=>btn.classList.remove('copied'),1800);
+  });
 }
 
+/* ── Chat Widget ── */
+const SOCKET_URL = 'http://localhost:3000'; // Ganti dengan URL server kamu
+
+let socket = null;
+let chatOpen = false;
+let sessionId = localStorage.getItem('fdv_session') || ('user_' + Math.random().toString(36).slice(2,9));
+localStorage.setItem('fdv_session', sessionId);
+
+function toggleChat(){
+  chatOpen = !chatOpen;
+  document.getElementById('chatPanel').classList.toggle('open', chatOpen);
+  if(chatOpen){
+    document.getElementById('chatNotif').style.display = 'none';
+    document.getElementById('chatInput').focus();
+    if(!socket) initSocket();
+  }
+}
+
+function initSocket(){
+  try{
+    // Coba koneksi Socket.IO
+    if(typeof io !== 'undefined'){
+      socket = io(SOCKET_URL);
+      socket.emit('join', { sessionId });
+
+      socket.on('message', (data) => {
+        if(data.from === 'admin'){
+          appendMsg(data.text, 'admin');
+          if(!chatOpen) showNotif();
+        }
+      });
+
+      socket.on('typing', () => {
+        document.getElementById('typingInd').classList.add('show');
+        setTimeout(()=>document.getElementById('typingInd').classList.remove('show'), 2500);
+      });
+    } else {
+      // Fallback: simulasi tanpa server (demo mode)
+      console.log('Socket.IO belum terhubung. Berjalan dalam mode demo.');
+    }
+  } catch(e){ console.warn('Chat server tidak tersedia, mode demo aktif.') }
+}
+
+function sendMsg(){
+  const inp = document.getElementById('chatInput');
+  const txt = inp.value.trim();
+  if(!txt) return;
+
+  appendMsg(txt, 'user');
+  inp.value = '';
+  autoResize(inp);
+
+  if(socket && socket.connected){
+    socket.emit('message', { text: txt, sessionId });
+  } else {
+    // Demo: balas otomatis
+    setTimeout(()=>{
+      document.getElementById('typingInd').classList.add('show');
+      setTimeout(()=>{
+        document.getElementById('typingInd').classList.remove('show');
+        appendMsg('Terima kasih pesannya! Admin kami akan segera membalas. Untuk urusan mendesak hubungi jadicerdasyuuk7@gmail.com 😊', 'admin');
+      }, 1800);
+    }, 600);
+  }
+}
+
+function appendMsg(txt, from){
+  const msgs = document.getElementById('chatMsgs');
+  const empty = document.getElementById('chatEmpty');
+  if(empty) empty.style.display = 'none';
+
+  const typing = document.getElementById('typingInd');
+
+  const now = new Date();
+  const time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+
+  const div = document.createElement('div');
+  div.className = 'msg ' + from;
+  div.innerHTML = `<div class="msg-bubble">${escHtml(txt)}</div><div class="msg-time">${time}</div>`;
+  msgs.insertBefore(div, typing);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showNotif(){
+  const n = document.getElementById('chatNotif');
+  n.style.display = 'flex';
+}
+
+function handleKey(e){
+  if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sendMsg(); }
+}
+
+function autoResize(el){
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+function escHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+// Load Socket.IO dari server
+const s = document.createElement('script');
+s.src = SOCKET_URL + '/socket.io/socket.io.js';
+s.onerror = () => console.log('Mode demo aktif — server belum berjalan.');
+document.head.appendChild(s);
 </script>
-
-<div class="container">
-
-<div class="terminal">
-
-<div class="terminal-header">
-
-<div class="left-header">
-
-<div class="win-logo"></div>
-
-<span>Windows Terminal - Administrator</span>
-
-</div>
-
-<div class="window-buttons">
-
-<div class="circle red"></div>
-<div class="circle yellow"></div>
-<div class="circle green"></div>
-
-</div>
-
-</div>
-
-<div id="terminal"></div>
-
-</div>
-
-<div class="right">
-
-<img src="FDeveloper.png" class="logo" alt="FDeveloper">
-
-<h1>
-Website Sedang
-<span class="highlight">Update</span>
-</h1>
-
-<div class="desc">
-Kami sedang melakukan peningkatan sistem, optimasi server,
-pembaruan keamanan, dan pengembangan fitur terbaru untuk
-memberikan pengalaman yang lebih cepat, aman, dan stabil.
-Silakan kembali beberapa saat lagi.
-</div>
-
-<div class="status">
-<div class="status-dot"></div>
-<div>Maintenance In Progress...</div>
-</div>
-
-</div>
-
-</div>
-
-<script>
-
-const terminal =
-document.getElementById("terminal");
-
-const logs = [
-
-"Microsoft Windows [Version 11.0.26100.1]",
-"(c) Microsoft Corporation. All rights reserved.",
-"",
-"C:\\FDeveloper> dir /s",
-"",
-"Volume in drive C has no label.",
-"Directory of C:\\FDeveloper",
-"",
-"index.html",
-"style.css",
-"app.js",
-"dashboard.js",
-"api.js",
-"auth.js",
-"maintenance.js",
-"routes.js",
-"",
-"C:\\FDeveloper> tasklist",
-"",
-"node.exe                Running",
-"nginx.exe               Running",
-"mysql.exe               Running",
-"redis.exe               Running",
-"",
-"C:\\FDeveloper> npm install",
-"",
-"Installing dependencies...",
-"added 487 packages",
-"",
-"C:\\FDeveloper> npm run build",
-"",
-"Compiling production bundle...",
-"",
-"█████░░░░░░░░░░░░░░░ 25%",
-"██████████░░░░░░░░░░ 50%",
-"███████████████░░░░░ 75%",
-"████████████████████ 100%",
-"",
-"[INFO] Compressing CSS",
-"[INFO] Compressing JavaScript",
-"[INFO] Optimizing Images",
-"[INFO] Building Assets",
-"[INFO] Updating Routes",
-"[INFO] Generating Cache",
-"",
-"C:\\FDeveloper> git pull origin main",
-"",
-"Receiving objects...",
-"Resolving deltas...",
-"Already up to date.",
-"",
-"C:\\FDeveloper> artisan migrate",
-"",
-"Migrating database...",
-"Database migration complete.",
-"",
-"C:\\FDeveloper> deploy --production",
-"",
-"Uploading assets...",
-"Restarting Nginx...",
-"Restarting Services...",
-"Verifying Security...",
-"",
-"[SUCCESS] Deployment Complete",
-"[SUCCESS] Service Restarted",
-"[SUCCESS] Cache Cleared",
-"[SUCCESS] System Optimized",
-"",
-"Website Status : Maintenance Mode",
-"",
-"C:\\FDeveloper>"
-];
-
-let lineIndex = 0;
-
-function createLine(){
-
-const div =
-document.createElement("div");
-
-terminal.appendChild(div);
-
-let text = logs[lineIndex];
-
-let charIndex = 0;
-
-const typing = setInterval(()=>{
-
-div.textContent += text.charAt(charIndex);
-
-charIndex++;
-
-terminal.scrollTop =
-terminal.scrollHeight;
-
-if(charIndex >= text.length){
-
-clearInterval(typing);
-
-lineIndex++;
-
-if(lineIndex >= logs.length){
-
-lineIndex = 0;
-
-setTimeout(()=>{
-
-terminal.innerHTML="";
-
-createLine();
-
-},1000);
-
-return;
-
-}
-
-setTimeout(createLine,60);
-
-}
-
-},10);
-
-}
-
-createLine();
-
-</script>
-
 </body>
 </html>
